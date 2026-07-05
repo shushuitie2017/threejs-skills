@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three.js Skills 中文版 · 一句话造一个能玩的浏览器 3D 游戏</title>
+<meta name="description" content="把 9 个 Three.js 游戏开发专家技能装进你的 AI Agent。你只用一句话说清想要什么游戏，游戏总监自动调度玩法、画质、UI、建模、音频、调试、质检，直到跑出能玩、能上线的浏览器 3D 成品。">
+<link rel="canonical" href="https://threejsskills.bluecatbot.com/">
+<meta property="og:title" content="Three.js Skills 中文版 · AI 造浏览器 3D 游戏的技能包">
+<meta property="og:description" content="9 个协作技能，一个总监统筹八个专家，从可玩循环到发布质检环环相扣。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://threejsskills.bluecatbot.com/">
+<meta property="og:image" content="https://threejsskills.bluecatbot.com/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Three.js Skills 中文版">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Three.js Skills 中文版 · AI 造浏览器 3D 游戏的技能包">
+<meta name="twitter:description" content="9 个协作技能，一个总监统筹八个专家，从可玩循环到发布质检环环相扣。">
+<meta name="twitter:image" content="https://threejsskills.bluecatbot.com/og-cover.png">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"Three.js Skills 中文版",
+  "applicationCategory":"DeveloperApplication",
+  "operatingSystem":"Claude Code / Codex",
+  "description":"把 9 个 Three.js 游戏开发专家技能装进 AI Agent，一句话造一个能玩、能上线的浏览器 3D 游戏。",
+  "url":"https://threejsskills.bluecatbot.com/",
+  "license":"https://opensource.org/licenses/MIT",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "author":{"@type":"Person","name":"蓝猫 BlueCat","url":"https://bluecatbot.com"}
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E121C'/%3E%3Cpath d='M16 5l9 5.2v10.4L16 26l-9-5.2V10.2z' fill='none' stroke='%235B8CFF' stroke-width='2'/%3E%3Cpath d='M16 5v21M7 10.2l18 10.4M25 10.2L7 20.6' stroke='%2332E0FF' stroke-width='1.2' opacity='.55'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06080E; --card:#0E121C; --card2:#121826; --line:#1E2740;
+    --tx:#E6ECFA; --mut:#8EA0C4; --dim:#5D6C8C;
+    --ac:#5B8CFF; --ac2:#32E0FF; --pur:#9B8CFF;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx);font-family:'Noto Sans SC',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.gk{font-family:'Space Grotesk','Noto Sans SC',sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .grad{background:linear-gradient(100deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(6,8,14,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:18px}
+  .cube{width:26px;height:26px}
+  .nav-links{display:flex;gap:22px;align-items:center;font-size:14px;color:var(--mut)}
+  .nav-links a:hover{color:var(--tx)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;font-weight:600;font-size:14px;transition:.2s}
+  .btn-p{background:linear-gradient(100deg,var(--ac),var(--ac2));color:#04060c}
+  .btn-p:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  .btn-g{border:1px solid var(--line);color:var(--tx)}
+  .btn-g:hover{border-color:var(--ac);background:rgba(91,140,255,.08)}
+  @media(max-width:720px){.nav-links a:not(.btn){display:none}}
+
+  /* hero */
+  header{position:relative;padding:88px 0 64px;overflow:hidden}
+  header::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(680px 360px at 78% 8%,rgba(50,224,255,.10),transparent 60%),
+    radial-gradient(560px 340px at 12% 30%,rgba(91,140,255,.12),transparent 62%);pointer-events:none}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--ac2);text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:clamp(34px,6vw,60px);line-height:1.08;font-weight:700;letter-spacing:-.01em}
+  .slogan{margin-top:18px;font-size:clamp(15px,2.2vw,19px);color:var(--mut);font-style:italic}
+  .lead{margin-top:22px;max-width:660px;font-size:16.5px;color:var(--tx)}
+  .lead b{color:#fff}
+  .sub{margin-top:12px;max-width:640px;font-size:14px;color:var(--dim)}
+  .cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .stats{margin-top:44px;display:flex;gap:40px;flex-wrap:wrap}
+  .stat .n{font-family:'Space Grotesk';font-weight:700;font-size:30px;background:linear-gradient(100deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:12.5px;color:var(--mut);margin-top:2px}
+
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.15em;color:var(--ac2);text-transform:uppercase}
+  h2{font-size:clamp(24px,3.6vw,32px);font-weight:700;margin:10px 0 8px}
+  .desc{color:var(--mut);max-width:680px;margin-bottom:26px}
+
+  /* code / terminal */
+  .term{background:#080B12;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(0,0,0,.8)}
+  .term-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;border-bottom:1px solid var(--line);background:#0B0F18}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .term-bar .t{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+  .term pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:13px;line-height:1.85;color:#cdd8f0;overflow-x:auto;white-space:pre-wrap}
+  .term .say{color:var(--ac2)}
+  .term .ok{color:#67E8B0}
+  .term .cm{color:var(--dim)}
+  .take{margin-top:20px;padding:16px 20px;border-left:3px solid var(--ac);background:rgba(91,140,255,.06);border-radius:0 10px 10px 0;color:var(--tx)}
+
+  /* install */
+  .cmd{display:flex;align-items:center;gap:12px;background:#080B12;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-family:var(--mono);font-size:13.5px;color:#cdd8f0;margin-top:14px}
+  .cmd code{flex:1;overflow-x:auto;white-space:nowrap}
+  .cmd .pr{color:var(--ac2)}
+  .copy{cursor:pointer;border:1px solid var(--line);background:var(--card2);color:var(--mut);border-radius:8px;padding:6px 12px;font-size:12px;font-family:var(--mono);transition:.2s;white-space:nowrap}
+  .copy:hover{border-color:var(--ac);color:var(--tx)}
+  .hint{font-size:13px;color:var(--dim);margin-top:12px}
+
+  /* skills grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .sk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.2s}
+  .sk:hover{border-color:var(--ac);transform:translateY(-3px);background:var(--card2)}
+  .sk .em{font-size:22px}
+  .sk .id{font-family:var(--mono);font-size:13px;color:var(--ac2);margin:10px 0 6px;word-break:break-all}
+  .sk .d{font-size:13.5px;color:var(--mut)}
+  .sk.lead-sk{border-color:var(--ac);background:linear-gradient(160deg,rgba(91,140,255,.10),var(--card2))}
+  .sk.lead-sk .id{color:#fff}
+  .tag{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:20px;margin-top:10px}
+
+  /* api table */
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+  th{font-size:12px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  td code{font-family:var(--mono);font-size:12.5px;color:var(--ac2)}
+  .redline{margin-top:16px;padding:14px 18px;border:1px solid rgba(155,140,255,.3);background:rgba(155,140,255,.06);border-radius:10px;font-size:13.5px;color:var(--tx)}
+
+  /* how / list */
+  .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .how .c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .how .n{font-family:'Space Grotesk';font-weight:700;font-size:20px;color:var(--ac2)}
+  .how h3{font-size:16px;margin:8px 0 6px}
+  .how p{font-size:13.5px;color:var(--mut)}
+  .bound li{list-style:none;padding:10px 0 10px 28px;position:relative;color:var(--mut);font-size:14.5px;border-bottom:1px solid var(--line)}
+  .bound li::before{content:"→";position:absolute;left:0;color:var(--pur);font-weight:700}
+  .bound li b{color:var(--tx)}
+
+  footer{border-top:1px solid var(--line);padding:48px 0 40px;text-align:center}
+  .fauthor{display:inline-flex;flex-direction:column;align-items:center;gap:6px}
+  .fslogan{color:var(--mut);font-style:italic;margin:8px 0 20px}
+  .fmatrix{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;font-size:14px}
+  .fmatrix a{color:var(--mut)}.fmatrix a:hover{color:var(--ac2)}
+  .lic{margin-top:24px;font-size:12.5px;color:var(--dim)}
+  ::selection{background:rgba(50,224,255,.25)}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">
+    <svg class="cube" viewBox="0 0 32 32"><path d="M16 3l11 6.3v13.4L16 29 5 22.7V9.3z" fill="none" stroke="#5B8CFF" stroke-width="1.8"/><path d="M16 3v26M5 9.3l22 12.7M27 9.3L5 22z" stroke="#32E0FF" stroke-width="1" opacity=".5"/></svg>
+    Three.js Skills
+  </a>
+  <div class="nav-links">
+    <a href="#demo">效果</a>
+    <a href="#install">安装</a>
+    <a href="#skills">技能</a>
+    <a href="#keys">密钥</a>
+    <a class="btn btn-g" href="https://github.com/shushuitie2017/threejs-skills" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</div></nav>
+
+<header id="top"><div class="wrap">
+  <div class="eyebrow">Three.js × AI Agent · 中文版</div>
+  <h1>一句话，造一个<br><span class="grad">能玩的浏览器 3D 游戏</span>。</h1>
+  <p class="slogan">「你负责说想要什么游戏，剩下的九个工匠自己动手。」</p>
+  <p class="lead">把 <b>9 个 Three.js 游戏开发专家技能</b>装进你的 AI Agent——你只用一句话说清想要什么游戏，「游戏总监」自动调度玩法、画质、UI、建模、音频、调试、质检，直到跑出一个<b>能玩、能上线</b>的浏览器 3D 成品。</p>
+  <p class="sub">不是又一份 Three.js 教程 —— 是一套能让 Claude Code / Codex 真正“做完一个游戏”的技能编排系统。</p>
+  <div class="cta">
+    <a class="btn btn-p" href="#install">🚀 快速开始</a>
+    <a class="btn btn-g" href="https://github.com/shushuitie2017/threejs-skills" target="_blank" rel="noopener">🐙 GitHub 源码</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">9</div><div class="l">协作专家技能</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">总监自动编排</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">核心功能免密钥</div></div>
+    <div class="stat"><div class="n">MIT</div><div class="l">开源随便用</div></div>
+  </div>
+</div></header>
+
+<section id="demo"><div class="wrap">
+  <div class="kicker">Show, not tell</div>
+  <h2>你只说一句话，它自己做完</h2>
+  <p class="desc">装好技能后，在一个空文件夹里打开 Claude Code / Codex，点名总监技能，剩下的交给它：</p>
+  <div class="term">
+    <div class="term-bar"><span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span><span class="t">claude code · 你的项目</span></div>
+<pre><span class="say">你：</span> 用 threejs-game-director 从零做一个精品未来风的塔防游戏。
+     自动调用玩法、画质、UI、建模、音频、调试、质检各技能。
+     先做出能玩的循环，再迭代到通过浏览器、移动端、视觉、UI、性能、发布各项检查。
+
+<span class="cm"># Agent 自己做完这些，不用你逐个点名专家技能：</span>
+<span class="ok">✓</span> 加载 threejs-game-director → 拆解为 玩法/画质/UI/资产/音频/调试/质检 各阶段
+<span class="ok">✓</span> 用内置 Vite + TypeScript + Three.js 脚手架起项目
+<span class="ok">✓</span> 先跑出一个能玩的核心循环（可控、有目标、有胜负）
+<span class="ok">✓</span> npm run build → 浏览器实跑 → 控制台报错检查 → Playwright 截图
+<span class="ok">✓</span> 画布非空像素检查 → 桌面/移动端视口 → 主操作交互验证
+<span class="ok">✓</span> 填「视觉评分卡」，把原型级和精品级分清楚，剩余风险写明</pre>
+  </div>
+  <div class="take">它的价值不在“会写 Three.js”，而在把“做一个游戏”这件事拆成<b>有验收、有证据、有台账</b>的流水线——不让原型级的东西冒充精品。</div>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <div class="kicker">Install</div>
+  <h2>两种装法，30 秒接入</h2>
+  <p class="desc">安装器只把 <code>skills/</code> 复制进对应 agent 的技能目录；同名默认跳过，也绝不删除你其它无关技能。</p>
+  <p style="font-size:14px;color:var(--mut);margin-bottom:2px">方式一 · 克隆后本地安装（推荐，最稳）</p>
+  <div class="cmd"><code><span class="pr">$</span> git clone https://github.com/shushuitie2017/threejs-skills.git &amp;&amp; cd threejs-skills &amp;&amp; ./install.sh --claude</code><button class="copy" data-c="git clone https://github.com/shushuitie2017/threejs-skills.git && cd threejs-skills && ./install.sh --claude">复制</button></div>
+  <p style="font-size:14px;color:var(--mut);margin:18px 0 2px">方式二 · 一行远程安装（skills CLI）</p>
+  <div class="cmd"><code><span class="pr">$</span> pnpm dlx skills add shushuitie2017/threejs-skills --skill '*' -a claude-code -g -y</code><button class="copy" data-c="pnpm dlx skills add shushuitie2017/threejs-skills --skill '*' -a claude-code -g -y">复制</button></div>
+  <p class="hint">装好后，在你的项目里对 agent 说出你想要的游戏、点名 <code style="font-family:var(--mono);color:var(--ac2)">threejs-game-director</code> 即可——它会拉起需要的专家技能。Codex 用 <code style="font-family:var(--mono);color:var(--ac2)">--codex</code>，两个都装 <code style="font-family:var(--mono);color:var(--ac2)">--all</code>。</p>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <div class="kicker">The Crew</div>
+  <h2>九个技能，各管一段产线</h2>
+  <p class="desc">一个总监统筹，八个专家各守一段。每个技能安装后自包含，自带 SKILL.md、参考资料、检查清单与脚本。</p>
+  <div class="grid">
+    <div class="sk lead-sk"><div class="em">🎬</div><div class="id">threejs-game-director</div><div class="d">总入口：完整游戏搭建与编排，自动分阶段调度其余技能。</div><span class="tag" style="background:rgba(50,224,255,.14);color:var(--ac2)">总监</span></div>
+    <div class="sk"><div class="em">🕹️</div><div class="id">threejs-gameplay-systems</div><div class="d">可玩循环、架构、机制、实体、输入、相机、物理、手感。</div></div>
+    <div class="sk"><div class="em">🎨</div><div class="id">threejs-aaa-graphics-builder</div><div class="d">视觉评分卡、资产架构、模型、材质、光照、VFX、渲染打磨。</div></div>
+    <div class="sk"><div class="em">🖼️</div><div class="id">threejs-game-ui-designer</div><div class="d">HUD、菜单、浮层、响应式布局、图标、安全区、触控。</div></div>
+    <div class="sk"><div class="em">🐛</div><div class="id">threejs-debug-profiler</div><div class="d">黑屏、运行时报错、加载/缩放/移动端 Bug、性能与渲染指标。</div></div>
+    <div class="sk"><div class="em">✅</div><div class="id">threejs-qa-release</div><div class="d">生产构建、浏览器质检、截图、画布像素、移动端检查、发布风险报告。</div></div>
+    <div class="sk"><div class="em">🧊</div><div class="id">threejs-3d-generator</div><div class="d">Tripo API 文/图生 3D、纹理、骨骼绑定、动画、GLB/FBX 资产。</div></div>
+    <div class="sk"><div class="em">🖌️</div><div class="id">threejs-image-generator</div><div class="d">Gemini 生成概念原画、纹理、贴花、天空、图标、界面美术、图生 3D 源图。</div></div>
+    <div class="sk"><div class="em">🔊</div><div class="id">threejs-audio-generator</div><div class="d">ElevenLabs 音效、环境音、界面音、解说/配音 TTS、变声、降噪。</div></div>
+  </div>
+</div></section>
+
+<section id="keys"><div class="wrap">
+  <div class="kicker">Optional</div>
+  <h2>可选 API 密钥</h2>
+  <p class="desc">核心 Three.js 技能<b style="color:#fff">不需要任何付费密钥</b>就能用。缺密钥时总监会回退到程序化/本地资产。只在你想让 agent 生成外部模型/图像/音频时才配：</p>
+  <table>
+    <tr><th>提供方</th><th>技能</th><th>环境变量</th><th>用途</th></tr>
+    <tr><td>Tripo</td><td><code>threejs-3d-generator</code></td><td><code>TRIPO_API_KEY</code></td><td>文/图生 3D、可直接用的 GLB/FBX 主角/载具/道具、纹理、绑定、动画</td></tr>
+    <tr><td>Gemini</td><td><code>threejs-image-generator</code></td><td><code>GEMINI_API_KEY</code></td><td>概念原画、图生 3D 源图、纹理、贴花、天空、图标、界面美术</td></tr>
+    <tr><td>ElevenLabs</td><td><code>threejs-audio-generator</code></td><td><code>ELEVENLABS_API_KEY</code></td><td>音效、环境音、界面音、解说/对白 TTS、变声、音频清理</td></tr>
+  </table>
+  <div class="redline">🔒 <b>红线</b>：绝不把 API 密钥提交进 git、也绝不写进浏览器端游戏代码。技能只在本地 agent 工具里调用这些 API，再把生成的资产存进你的游戏项目。</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker">How it works</div>
+  <h2>为什么它能“做完”，而不只是“生成”</h2>
+  <div class="how">
+    <div class="c"><div class="n">01</div><h3>一个总监，八个专家</h3><p>总监拿到需求后拆阶段、点名对应专家技能，你不必手动选。</p></div>
+    <div class="c"><div class="n">02</div><h3>证据驱动</h3><p>每步产出都要有构建、浏览器实跑、截图、像素/视口检查作证，才允许声称“做完”。</p></div>
+    <div class="c"><div class="n">03</div><h3>自包含脚手架</h3><p>从空文件夹起步时，内置 Vite + TypeScript + Three.js 游戏脚手架直接开跑。</p></div>
+    <div class="c"><div class="n">04</div><h3>精品有门槛</h3><p>「视觉评分卡」把原型级和精品级分开，占位方块、静态场景、没验证的截图不算精品。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="kicker">Honest boundaries</div>
+  <h2>诚实边界</h2>
+  <ul class="bound">
+    <li><b>这是开源技能包的中文改编版</b>：9 个 SKILL.md 与说明已全面中文化；深层 references 技术参考目前仍是英文，会按需逐步中文化。</li>
+    <li><b>不自带可玩 demo</b>：本项目是让你的 agent 去“造”游戏的技能，不附带成品游戏站点。</li>
+    <li><b>需要 Claude Code 或 Codex</b>：它是给这类编码 agent 用的技能编排，不是独立可执行程序。</li>
+    <li><b>AI 不保证一次到位</b>：它把流程、验收和回退讲清楚，但复杂游戏仍需你参与迭代与判断。</li>
+  </ul>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fauthor">
+    <div style="font-family:'Space Grotesk';font-weight:700;font-size:17px">蓝猫 · BlueCat</div>
+    <div style="font-size:13px;color:var(--dim)">AI-native builder · 做能上线的中英日三语产品</div>
+  </div>
+  <p class="fslogan">你负责说想要什么游戏，剩下的九个工匠自己动手。</p>
+  <div class="fmatrix">
+    <a href="https://github.com/shushuitie2017/threejs-skills" target="_blank" rel="noopener">🐙 GitHub</a>
+    <a href="https://bluecatbot.com" target="_blank" rel="noopener">🌐 bluecatbot.com</a>
+    <a href="https://3d.bluecatbot.com" target="_blank" rel="noopener">🧊 蓝猫 3D</a>
+  </div>
+  <div class="lic">MIT —— 随便用，随便改，随便造。</div>
+</div></footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    navigator.clipboard.writeText(b.dataset.c).then(function(){
+      var t=b.textContent;b.textContent='已复制 ✓';setTimeout(function(){b.textContent=t},1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

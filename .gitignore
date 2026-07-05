@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build and test outputs
+dist/
+**/dist/
+test-results/
+**/test-results/
+artifacts/
+**/artifacts/
+playwright-report/
+**/playwright-report/
+coverage/
+**/coverage/
+
+# Repo-local generated examples
+/examples/
+
+# Local release notes/checklists
+/RELEASE.md
+/release.md
+/release-notes.md
+
+# Local secrets and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Deploy connection / secrets (authoritative but never committed)
+servers.json
+*_config.json
+credentials.*
+*.pem
+HANDOFF.md
+
+# OS/editor files
+.DS_Store
+**/.DS_Store
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc

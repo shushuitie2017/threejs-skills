@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three.js QA Release"
+  short_description: "Verify and release Three.js games"
+  default_prompt: "Verify this Three.js game with browser QA, screenshots, canvas checks, responsive/mobile checks, production build, and release risk notes. First load the QA/release checklist reference, report the reference ledger, and include a pass/fail QA matrix."

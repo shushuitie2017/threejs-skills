@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three.js 3D Generator"
+  short_description: "Generate, texture, rig, animate, and convert Three.js game assets"
+  default_prompt: "Generate a game-ready 3D asset for a Three.js game. First run the credential probe, load the required provider API reference, and load Three.js integration or image-generator workflow references when relevant. Use threejs-image-generator first if a 2D concept/reference/texture/logo would improve the result. Download the outputs, report credential probe output, reference ledger, task IDs, files, and Three.js import/performance notes."
